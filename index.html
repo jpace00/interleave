@@ -1,110 +1,715 @@
-<!DOCTYPE html>
+<!DOCTYPE html><!-- v1772615520 -->
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interleave</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css" integrity="sha384-vSIIfh2YWi9wW0r9iZe7RJPrKwp6bG+s9QZMoITbCckVJqGCCRhc+ccxNcdpHuYu" crossorigin="anonymous">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="light dark" />
+  <title>Interleave — James Pace</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    :root {
+      --bg:    #ffffff;
+      --ink:   #1a1a1a;
+      --dim:   #444444;
+      --faint: #999999;
+      --teal:  #0097a7;
+      --green: #2d6a4f;
+      --red:   #8b3a2a;
+      --amber: #8a6420;
+      --font:  'Nunito', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--font);
+      font-size: 18px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    nav {
+      padding: 28px 48px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .nav-wordmark {
+      font-size: clamp(26px, 4.4vw, 43px);
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      line-height: 1;
+      color: #cc0000;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+      padding-top: 12px;
+    }
+    .nav-links a {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--dim);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .nav-links a:hover { color: var(--ink); }
+
+    /* ── DASHED RULE ── */
+    .dash-rule {
+      border: none;
+      border-top: 2px solid #999999;
+      margin: 0 48px;
+    }
+    .dash-rule-light {
+      border: none;
+      border-top: 2px dashed #cccccc;
+      margin: 0 48px;
+    }
+
+    /* ── PAGE ── */
+    .page { padding: 0 48px; }
+
+    /* ── SECTIONS ── */
+    .section { padding: 24px 0; }
+
+    /* ── HERO / ABOUT ── */
+    .about-body p {
+      font-size: 20px;
+      line-height: 1.75;
+      color: var(--ink);
+      margin-bottom: 20px;
+    }
+    .about-body p:last-child { margin-bottom: 0; }
+    .about-body strong { font-weight: 900; }
+    .about-body .name-caps {
+      font-weight: 400;
+      letter-spacing: 0.02em;
+    }
+    .ipo {
+      font-size: 14px;
+      color: #666666;
+      font-weight: 400;
+    }
+
+    /* ── COMPANIES TABLE ── */
+    .companies-table {
+      width: auto;
+      min-width: 600px;
+      border-collapse: collapse;
+      font-size: 14px;
+      margin: 0 auto;
+    }
+    .companies-table thead th {
+      text-align: left;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--faint);
+      padding: 0 16px 10px 0;
+      border-bottom: 1px solid #bbbbbb;
+    }
+    .companies-table tbody tr {
+      border-bottom: 1px dashed #cccccc;
+      transition: background 0.12s;
+    }
+    .companies-table tbody tr:hover { background: #f9f9f9; }
+    .companies-table tbody td {
+      padding: 8px 8px 8px 0;
+      color: var(--ink);
+      vertical-align: top;
+    }
+    .companies-table tbody td:first-child { font-weight: 700; white-space: nowrap; }
+    /* ── ROLE BADGES ── */
+    .role-badges { display: flex; gap: 4px; white-space: nowrap; }
+    .role-badge {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      border: 1.5px solid var(--faint);
+      font-size: 10px; font-weight: 700;
+      color: var(--faint);
+      line-height: 1;
+    }
+
+    .companies-table thead th:first-child { width: 200px; }
+    .companies-table thead th:nth-child(2) { width: 320px; }
+    .companies-table thead th:nth-child(3) { width: 72px; padding-left: 0; padding-right: 8px; }
+    .companies-table thead th:nth-child(4) { width: 260px; white-space: nowrap; }
+    .companies-table tbody td:nth-child(2) { padding-right: 8px; }
+    .companies-table tbody td:nth-child(3) { padding-left: 0; padding-right: 20px; }
+    .companies-table tbody td:nth-child(4) { white-space: nowrap; }
+    .status-exit  { color: var(--green); font-weight: 700; }
+    .status-blue  { color: #1a6bbf; font-weight: 700; }
+    .todo-cell { color: var(--faint); font-style: italic; opacity: 0.6; }
+
+    /* ── COMPANIES ── */
+    .companies-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      max-width: 560px;
+    }
+
+    .company-card {
+      border: 2.5px dotted var(--teal);
+      padding: 12px 18px;
+      margin-bottom: -2px; /* overlap borders */
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      text-decoration: none;
+      transition: background 0.15s;
+      cursor: pointer;
+    }
+    .company-card:hover { background: #f0fafb; }
+
+    .company-name {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--teal);
+    }
+    .company-year {
+      font-size: 14px;
+      color: var(--faint);
+      font-weight: 400;
+    }
+    .company-role {
+      font-size: 13px;
+      color: var(--faint);
+      font-weight: 400;
+      margin-left: auto;
+    }
+    .company-tag {
+      font-size: 12px;
+      font-weight: 700;
+      padding: 1px 8px;
+      border: 2px dotted currentColor;
+      white-space: nowrap;
+    }
+    .tag-exit  { color: var(--red); }
+    .tag-green { color: var(--green); }
+    .tag-todo  { color: var(--amber); opacity: 0.65; }
+
+    .company-desc {
+      font-size: 14px;
+      color: var(--dim);
+      line-height: 1.5;
+      margin-top: 4px;
+      display: none; /* shown on hover via JS */
+    }
+
+    /* ── EXPANDED company view ── */
+    .company-card.expanded { background: #f0fafb; }
+    .company-card.expanded .company-desc { display: block; }
+
+    /* ── TIMELINE ── */
+    .tl-wrap { max-width: 700px; }
+    .tl-item {
+      display: grid;
+      grid-template-columns: 130px 1fr;
+      gap: 0 20px;
+      padding: 18px 0;
+      border-top: 2px dashed #dddddd;
+    }
+    .tl-item:last-child { border-bottom: 2px dashed #dddddd; }
+
+    .tl-year {
+      font-size: 13px;
+      color: var(--faint);
+      font-weight: 700;
+      padding-top: 3px;
+      line-height: 1.4;
+    }
+    .tl-right {}
+    .tl-company {
+      font-size: 19px;
+      font-weight: 900;
+      color: var(--ink);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    a.tl-company:hover { color: var(--teal); }
+    .tl-role {
+      font-size: 14px;
+      color: var(--faint);
+      font-weight: 400;
+      margin-bottom: 6px;
+    }
+    .tl-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 6px; }
+    .tl-tag {
+      font-size: 12px;
+      font-weight: 700;
+      padding: 1px 8px;
+      border: 2px dotted currentColor;
+    }
+    .tl-tag-exit  { color: var(--red); }
+    .tl-tag-green { color: var(--green); }
+    .tl-tag-todo  { color: var(--amber); opacity: 0.6; }
+    .tl-desc {
+      font-size: 15px;
+      color: var(--dim);
+      line-height: 1.65;
+    }
+    .tl-desc.todo { opacity: 0.45; font-style: italic; }
+
+    /* ── SERVICES ── */
+    .services-wrap { max-width: 700px; }
+    .service-item {
+      display: grid;
+      grid-template-columns: 130px 1fr;
+      gap: 0 20px;
+      padding: 20px 0;
+      border-top: 2px dashed #dddddd;
+    }
+    .service-item:last-child { border-bottom: 2px dashed #dddddd; }
+    .service-num {
+      font-size: 13px;
+      font-weight: 900;
+      color: var(--faint);
+      padding-top: 3px;
+      letter-spacing: 0.06em;
+    }
+    .service-name {
+      font-size: 20px;
+      font-weight: 900;
+      color: var(--ink);
+      margin-bottom: 6px;
+    }
+    .service-desc {
+      font-size: 16px;
+      color: var(--dim);
+      line-height: 1.7;
+    }
+
+    /* ── CONTACT ── */
+    .contact-body {
+      font-size: 19px;
+      line-height: 1.75;
+      color: var(--ink);
+      max-width: 560px;
+      margin-bottom: 32px;
+    }
+    .contact-body strong { font-weight: 900; }
+
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      max-width: 520px;
+    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .field { display: flex; flex-direction: column; gap: 6px; }
+    .field label {
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--faint);
+    }
+    .field input, .field textarea {
+      background: var(--bg);
+      border: 2.5px dotted var(--ink);
+      padding: 10px 14px;
+      font-family: var(--font);
+      font-size: 16px;
+      color: var(--ink);
+      outline: none;
+      resize: none;
+      transition: border-color 0.15s;
+    }
+    .field input:focus, .field textarea:focus {
+      border-color: var(--teal);
+    }
+    .field textarea { min-height: 100px; }
+    .submit-btn {
+      align-self: flex-start;
+      background: var(--ink);
+      color: var(--bg);
+      border: none;
+      padding: 12px 32px;
+      font-family: var(--font);
+      font-size: 16px;
+      font-weight: 900;
+      letter-spacing: 0.06em;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .submit-btn:hover { background: var(--teal); }
+
+    /* ── SECTION HEADER ── */
+    .section-title {
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--faint);
+      margin-bottom: 28px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 32px 48px 52px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-copy { font-size: 14px; color: var(--faint); font-weight: 400; }
+    .footer-links { display: flex; gap: 24px; }
+    .footer-links a {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--faint);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .footer-links a:hover { color: var(--ink); }
+
+    /* ── FORCE LIGHT MODE ── */
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg:    #111111;
+        --ink:   #e8e8e8;
+        --dim:   #aaaaaa;
+        --faint: #666666;
+        --teal:  #26c6d4;
+        --green: #4caf7d;
+        --red:   #e05a4a;
+        --amber: #c8963a;
+      }
+      body { background: #111111; color: #e8e8e8; }
+      nav { background: #111111; border-bottom-color: #333333; }
+      .dash-rule { border-top-color: #555555; }
+      .companies-table thead th { border-bottom-color: #444444; }
+      .companies-table tbody tr { border-bottom-color: #2a2a2a; }
+      .companies-table tbody tr:hover { background: #1a1a1a; }
+      .role-badge { border-color: #666666; color: #888888; }
+      .section-title { color: #e8e8e8; }
+      input, textarea { background: #1a1a1a; color: #e8e8e8; border-color: #444444; }
+      input::placeholder, textarea::placeholder { color: #555555; }
+      .submit-btn { background: #e8e8e8; color: #111111; }
+      .submit-btn:hover { background: #cccccc; }
+      footer { border-top-color: #333333; color: #666666; }
+      .nav-links a { color: #aaaaaa; }
+      .nav-links a:hover { color: #e8e8e8; }
+      .status-exit { color: var(--green); }
+      .status-blue { color: #5b9bd5; }
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .logo-bar-dark { fill: #e8e8e8; }
+    } */
+    .reveal { opacity: 0; transition: opacity 0.45s ease; }
+    .reveal.visible { opacity: 1; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 680px) {
+      nav {
+        padding: 16px 16px 12px;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .nav-wordmark { font-size: 36px; }
+      .nav-links { gap: 16px; }
+      .nav-links a { font-size: 14px; }
+
+      .dash-rule, .dash-rule-light { margin: 0 16px; }
+      .page { padding: 0 16px; }
+      .section { padding: 32px 0; }
+
+      .about-body p { font-size: 16px; }
+
+      /* Table → card stack */
+      .companies-table thead { display: none; }
+      .companies-table tbody tr {
+        display: block;
+        padding: 14px 0;
+        border-bottom: 1px dashed #cccccc;
+      }
+      .companies-table tbody td {
+        display: block;
+        padding: 2px 0;
+        font-size: 13px;
+        white-space: normal;
+      }
+      .companies-table tbody td:first-child {
+        font-size: 15px;
+        font-weight: 700;
+        margin-bottom: 2px;
+      }
+      .companies-table tbody td:nth-child(2)::before {
+        content: '';
+      }
+      .companies-table tbody td:last-child {
+        margin-top: 4px;
+      }
+
+      .tl-item, .service-item { grid-template-columns: 1fr; gap: 4px; }
+      .tl-year, .service-num { font-size: 12px; }
+
+      .contact-body { font-size: 16px; }
+      .form-row { grid-template-columns: 1fr; }
+      .submit-btn { width: 100%; text-align: center; }
+
+      footer {
+        padding: 24px 16px 40px;
+        flex-direction: column;
+        gap: 10px;
+        align-items: flex-start;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="title-container">
-        <h1 class="title">( interleave )</h1>
-        <p class="sub-title">( interleave ) is an advisory and investment vehicle for early stage startups brought to you by <a href="https://www.linkedin.com/in/james-pace-772142/" target="_blank">James Pace</a> <a href="https://www.linkedin.com/in/james-pace-772142/" target="_blank"><i id="linkedin-icon" class="fab fa-linkedin"></i></a></p>
-        
-        <!-- Begin Mailchimp Signup Form -->
-            <div id="mc_embed_signup">
-            <form action="https://Interleave.us7.list-manage.com/subscribe/post?u=b52500c37acdf8e58cac6391c&amp;id=21024ca89e" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
-                <div id="mc_embed_signup_scroll">
-                <input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="enter email address to contact Interleave" required>
-                <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
-                <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_b52500c37acdf8e58cac6391c_21024ca89e" tabindex="-1" value=""></div>
-                <div class="clear" style="display: inline-block;"><input type="submit" value="Send" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
-                </div>
-            </form>
-            </div>
-        <!--End mc_embed_signup-->
+
+<!-- NAV -->
+<nav>
+  <a class="nav-wordmark" href="#" style="display:inline-flex;align-items:center;gap:12px;text-decoration:none;">
+    <svg width="30" height="32" viewBox="0 0 32 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="0"  y="4"  width="24" height="5" fill="#cc0000"/>
+      <rect x="8"  y="12" width="24" height="5" fill="#1a1a1a" opacity="0.35"/>
+      <rect x="0"  y="20" width="24" height="5" fill="#cc0000" opacity="0.55"/>
+      <rect x="8"  y="28" width="24" height="5" fill="#1a1a1a" opacity="0.2"/>
+    </svg>
+    INTERLEAVE
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#companies">Companies</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<hr class="dash-rule" />
+
+<!-- ABOUT -->
+<div class="page">
+  <div class="section reveal" id="about">
+    <div class="about-body">
+      <p>
+        <span style="color:#cc0000;">INTERLEAVE</span> is an advisory and investment vehicle. I'm James Pace.
+        <span style="color:#cc0000;">INTERLEAVE</span> has worked mostly in IoT, embedded, and cloud-connected embedded tools, but increasingly in AI and some other things, too.
+      </p>
+      <p>
+        Background: I helped build out the first high-speed consumer internet at cable modem ISP <a href="https://en.wikipedia.org/wiki/@Home_Network" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;text-decoration-style:dotted;text-decoration-color:#aaaaaa;text-underline-offset:3px;">@Home Network</a><span class="ipo"> (IPO: 1997)</span>; did Hard Things at <em>ur</em>-cloud compute company <a href="https://en.wikipedia.org/wiki/Opsware" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;text-decoration-style:dotted;text-decoration-color:#aaaaaa;text-underline-offset:3px;">Loudcloud</a><span class="ipo"> (IPO: 2001)</span>; helped build massive IPv6 wireless mesh networks for smart grids and cities  at <a href="https://en.wikipedia.org/wiki/Silver_Spring_Networks" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;text-decoration-style:dotted;text-decoration-color:#aaaaaa;text-underline-offset:3px;">Silver Spring Networks</a><span class="ipo"> (IPO: 2013)</span>; co-founded <a href="http://runtime.io/" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;text-decoration-style:dotted;text-decoration-color:#aaaaaa;text-underline-offset:3px;">Runtime</a><span class="ipo"> (EXIT: 2018)</span>, an early device-to-cloud IoT platform predicated on open source. <a href="https://www.linkedin.com/in/james-pace-772142/" target="_blank" rel="noopener" style="text-decoration:none;"><img src="https://www.google.com/s2/favicons?domain=linkedin.com&sz=32" alt="LinkedIn" style="height:16px;width:16px;vertical-align:middle;opacity:0.7;"></a>
+      </p>
     </div>
+  </div>
+</div>
 
-    <hr width="75%;" text-align="center;" size="3;" color="#000000;" >
-    <div class="companies-container">
-        <h3>Companies</h3>
+<hr class="dash-rule" />
 
-        <div class="company-row">
-            <div class="company-block col-6">
-                <a href="https://memfault.com/" target="_blank"><img class="company-logo" src="images/memfault.png" alt=""></a>
-                <div class="company-block-description">
-                    <p class="company-block-title">MemFault</p>
-                    <p class="company-block-subtitle">Say goodbye to firmware bugs. (2020)</p>    
-                </div>
-            </div>
-            <div class="company-block col-6">
-                <a href="https://eradb.com/" target="_blank"><img class="company-logo" src="images/eraDB.png" alt=""></a>
-                <div class="company-block-description">
-                    <p class="company-block-title">EraDB</p>
-                    <p class="company-block-subtitle">Decoupled storage, decoupled compute. (2020)</p>    
-                </div>
-            </div>
+<!-- COMPANIES -->
+<div class="page">
+  <div class="section reveal" id="companies">
+    <p style="font-size:20px;line-height:1.75;color:var(--ink);margin-bottom:16px;">Since exiting Runtime in 2019, I started <span style="color:#cc0000;">INTERLEAVE</span> and have been involved with the following early stage companies:</p>
+    <div style="display:inline-block;">
+    <table class="companies-table">
+      <thead>
+        <tr>
+          <th>Who</th>
+          <th>What</th>
+          <th style="width:72px; padding-right: 20px;">Role</th>
+          <th>The latest</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><img src="https://www.google.com/s2/favicons?domain=airasecurity.ai&sz=32" alt="" style="height:16px;width:16px;vertical-align:middle;margin-right:8px;"><a href="https://airasecurity.ai" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;text-decoration-style:dotted;text-decoration-color:#aaaaaa;text-underline-offset:3px;">Aira Security</a> <span class="ipo">(2026)</span></td>
+          <td>Enforcement layer for AI agents</td>
+          <td><div class="role-badges"><span class="role-badge">I</span></div></td>
+          <td><span class="status-blue">Pre-Seed</span></td>
+        </tr>
+        <tr>
+          <td><img src="https://www.google.com/s2/favicons?domain=spotflow.io&sz=32" alt="" style="height:16px;width:16px;vertical-align:middle;margin-right:8px;"><a href="https://spotflow.io" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;text-decoration-style:dotted;text-decoration-color:#aaaaaa;text-underline-offset:3px;">Spotflow</a> <span class="ipo">(2026)</span></td>
+          <td>Observability, OTA upgrade, more</td>
+          <td><div class="role-badges"><span class="role-badge">A</span></div></td>
+          <td><span class="status-blue">Pre-Seed</span></td>
+        </tr>
+        <tr>
+          <td><img src="https://www.google.com/s2/favicons?domain=nekko.ai&sz=32" alt="" style="height:16px;width:16px;vertical-align:middle;margin-right:8px;"><a href="https://nekko.ai" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;text-decoration-style:dotted;text-decoration-color:#aaaaaa;text-underline-offset:3px;">Ainekko</a> <span class="ipo">(2025)</span></td>
+          <td>AI inference at the edge (IoT). hella open source</td>
+          <td><div class="role-badges"><span class="role-badge">I</span><span class="role-badge">A</span></div></td>
+          <td><span class="status-blue">Seed</span></td>
+        </tr>
+        <tr>
+          <td><img src="https://www.google.com/s2/favicons?domain=kapital.com&sz=32" alt="" style="height:16px;width:16px;vertical-align:middle;margin-right:8px;"><a href="https://kapital.com" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;text-decoration-style:dotted;text-decoration-color:#aaaaaa;text-underline-offset:3px;">Kapital</a> <span class="ipo">(2025)</span></td>
+          <td>Mexican fintech challenger bank</td>
+          <td><div class="role-badges"><span class="role-badge">I</span></div></td>
+          <td><span class="status-blue">$100M Series C (2025)</span></td>
+        </tr>
+        <tr>
+          <td><img src="https://www.google.com/s2/favicons?domain=swervair.com&sz=32" alt="" style="height:16px;width:16px;vertical-align:middle;margin-right:8px;"><a href="https://swervair.com" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;text-decoration-style:dotted;text-decoration-color:#aaaaaa;text-underline-offset:3px;">SWERV</a> <span class="ipo">(2025)</span></td>
+          <td>Make bad air good with residential ERV</td>
+          <td><div class="role-badges"><span class="role-badge">I</span><span class="role-badge">A</span></div></td>
+          <td><span class="status-blue">Pre-Seed</span></td>
+        </tr>
+        <tr>
+          <td><img src="https://www.google.com/s2/favicons?domain=trustero.com&sz=32" alt="" style="height:16px;width:16px;vertical-align:middle;margin-right:8px;"><a href="https://www.trustero.com" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;text-decoration-style:dotted;text-decoration-color:#aaaaaa;text-underline-offset:3px;">Trustero</a> <span class="ipo">(2025)</span></td>
+          <td>Multi-agent AI for continuous compliance</td>
+          <td><div class="role-badges"><span class="role-badge">B</span><span class="role-badge">A</span></div></td>
+          <td><span class="status-blue">$10M Series A (2024)</span></td>
+        </tr>
+        <tr>
+          <td><img src="https://www.google.com/s2/favicons?domain=diligent.bio&sz=32" alt="" style="height:16px;width:16px;vertical-align:middle;margin-right:8px;"><a href="https://www.diligent.bio" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;text-decoration-style:dotted;text-decoration-color:#aaaaaa;text-underline-offset:3px;">Diligent.bio</a> <span class="ipo">(2025)</span></td>
+          <td>Agentic diligence engine for life sciences investing</td>
+          <td><div class="role-badges"><span class="role-badge">A</span></div></td>
+          <td><span class="status-blue">Pre-Seed</span></td>
+        </tr>
+        <tr>
+          <td><img src="https://www.google.com/s2/favicons?domain=embeint.com&sz=32" alt="" style="height:16px;width:16px;vertical-align:middle;margin-right:8px;"><a href="https://embeint.com" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;text-decoration-style:dotted;text-decoration-color:#aaaaaa;text-underline-offset:3px;">Embeint</a> <span class="ipo">(2024)</span></td>
+          <td>ML/AI over very low power wireless</td>
+          <td><div class="role-badges"><span class="role-badge">A</span></div></td>
+          <td><span class="status-blue">Pre-Seed</span></td>
+        </tr>
+        <tr>
+          <td><img src="https://www.google.com/s2/favicons?domain=golioth.io&sz=32" alt="" style="height:16px;width:16px;vertical-align:middle;margin-right:8px;"><a href="https://golioth.io" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;text-decoration-style:dotted;text-decoration-color:#aaaaaa;text-underline-offset:3px;">Golioth</a> <span class="ipo">(2021)</span></td>
+          <td>IoT infrastructure as code</td>
+          <td><div class="role-badges"><span class="role-badge">I</span><span class="role-badge">A</span></div></td>
+          <td><span class="status-exit">EXIT → Canonical (2026)</span></td>
+        </tr>
+        <tr>
+          <td><img src="https://www.google.com/s2/favicons?domain=kadencebio.com&sz=32" alt="" style="height:16px;width:16px;vertical-align:middle;margin-right:8px;"><a href="https://www.kadencebio.com" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;text-decoration-style:dotted;text-decoration-color:#aaaaaa;text-underline-offset:3px;">Kadence Bio</a> <span class="ipo">(2021)</span></td>
+          <td>Very novel therapeutics (!)</td>
+          <td><div class="role-badges"><span class="role-badge">I</span><span class="role-badge">A</span></div></td>
+          <td><span class="status-blue">$10M Series A (2025)</span></td>
+        </tr>
+        <tr>
+          <td><img src="https://www.google.com/s2/favicons?domain=mercury.com&sz=32" alt="" style="height:16px;width:16px;vertical-align:middle;margin-right:8px;"><a href="https://www.mercury.com" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;text-decoration-style:dotted;text-decoration-color:#aaaaaa;text-underline-offset:3px;">Mercury</a> <span class="ipo">(2021)</span></td>
+          <td>Startup, high growth banking</td>
+          <td><div class="role-badges"><span class="role-badge">I</span></div></td>
+          <td><span class="status-blue">$300M Series C (2025)</span></td>
+        </tr>
+        <tr>
+          <td><img src="https://www.google.com/s2/favicons?domain=netrise.io&sz=32" alt="" style="height:16px;width:16px;vertical-align:middle;margin-right:8px;"><a href="https://netrise.io" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;text-decoration-style:dotted;text-decoration-color:#aaaaaa;text-underline-offset:3px;">NetRise</a> <span class="ipo">(2021)</span></td>
+          <td>Software supply chain (IoT) security</td>
+          <td><div class="role-badges"><span class="role-badge">I</span></div></td>
+          <td><span class="status-blue">$10M Series A (2025)</span></td>
+        </tr>
+        <tr>
+          <td><img src="data:image/jpeg;base64,UklGRpQFAABXRUJQVlA4IIgFAACQHwCdASp4AHgAPjEYikQiIaESCQSAIAMEsoULXhBPMup7YFuD1AbZPzAfsB1C/QA81X1AP2A9gD9APTM/Z74L/2q/cv2lv/ndM+eL7tetX8p/4+gU+pv1P8dPyg1g/+Sf138X/yjzlD5z/kvzD8QDkMfyf+l/lzzPtAD+Pf03/W/x/3Ov3z/b/2zzofMn+i/un7kfQJ/JP55/n/7v+4f7//UV7BPRc/aAYX/GlT0EtmlBTxzGG/4CR57Rl2Il8zwjUC+CQ3MYZVZUVLFYGRMkBhqxzGs1ddjR3F8A3vl2T4JUnDpuSw/hDk9qkZxtu3cjv9cFkTjEsqNKCnoJbNKCnoJbKgAA/v/ZnAADh/zE9/CY1LoXIvf18gk73hu4X14LvLn9tuV4QmPeGcyf8nFBlMUCw4LnbiNEZZJODxjNOAGM66iA5xRj01M//4Qh5W5TZr7/hTdfwkW8S3LRJytIMSCj+uZuMbbLfS2/tXcdw0HUFie4fzHbZHasd9xrqaspCicyizUbFTcx/d0FqtHDBdeB/OgyadtWgyb//1zsQvSOS8nD64p+XBh23XLWmX/9bsz2i9NrYweteOMNTU75rkZAzUF3XAuqEdfHZeZ8vc4k+Fk+CsvIe/GD/XwkGY1L53ZqzKBOT7SzLsCnH3moK/iATpbMKSNXRJ86yC52Ok5LSKKQ/xLnEP/P7ZjhdtJlwdOhT2kjnw2pWpIZks3mTbyOYzgnLLFaVWhOss8dL6n56gfAniGsxpWF1ZFP2O9N5Gi+7i4f//Y/iTnf01s2+hz/T9HSf5kJNPiNf/NEapndKVYLJbOzotDEzOH0viJP4QlVmC8ODMLZHiMlYZHCmvQQx0+RmbrYxRNyv4fW63IkFvY1uajBwxBfAzby7/WsAVNW2K2KdMMDveGoPadz4f9p3uI8+FoYRP5UasTvKKOtZqJ0nGMjWa6wUQaNxXum7xB2mAXXeT5ajwaVmJtZOlOBVX82jKV9btkGJNFjkfZwwh8qPPnJ4ZMUkD7oubYqcolrbI3fQ1/wT6jxn7BI/XWki3K1ptz/85VohHkboTTO//qTPnD2Fz/75M9WFJeXZTch/ukXYRDRuMbdzzb1S5aBm4L4Bh7RZUSRjIIdGvIw1JiF8TBxIgTfjf5/buySm9MoAIHeZh3Qs4tOJUgKqwulxC26o/2MTtp9aBloP/IlSV3neAF91T+1K3qM+onlyhL+hreP2yYGm7IIqSw+lZ6BqSP5Aro2/FRpKq0hOtixy5lWZA58mMvnsmaVJvyw9vY3gHOhKt+5f8dTGlYTGf9T9tmesVZsVM40YfS1rN0tBBVRgaLHEJ/L5RQ3nvZ1xXSVj/v/RRJ0xBtUZcClL0L20X5U/bAUcv4bEgM2qSStE1d/ehfMGf5hR/0Vd3m+F+5pLAG5vUzd4JFBFATujYqO2P6YCNoTn7v1IsK/ShRjBz+czsN/zG5QNFjooyEdAPlABeXFLaG8PRAtSEtHuBki9vjar4ijZ/3JjpXPN9AuqifY2eYnfqJLWBD/ptaSkMdzK3ss3/mvgpyqF3alfVU5/33FMd8rikNNw5cOgh6GN0a8XP9CW/Rdy+gqz//YTV8p13Mz0uGu74ZHpsxwPa6NCQUvLEEX2MLb+ZA+G2ais0DvZSeD5ZLwSd/PjsUvzECfCj7GvKb8BQFrPxbcTbGwPTLrqg6eDqqT1i5wrPtj98+Gi6+6xdG+SLp//zeNTLnjbKVdzj7Ws8JybtoAqMdZQTqIpef+X1HoB+eSJYoWnmdfXGAba5qPTD8RAfv/GOhxsD2RHRfdyN+f2zRQ7ov3DEtaia3Rxu2edob5JdB7yRbi5ElC/7oHSSyXnv4ly9T4lPvln0fhM+PUErRSBNdWVAAAAAA=" alt="Wyde Labs" style="height:16px;vertical-align:middle;margin-right:8px;">Wyde Labs <span class="ipo">(2021)</span></td>
+          <td>Solving proximity with UWB</td>
+          <td><div class="role-badges"><span class="role-badge">I</span><span class="role-badge">A</span><span class="role-badge">B</span></div></td>
+          <td><span class="status-exit" style="color:var(--red);">WIND DOWN (2022)</span></td>
+        </tr>
+        <tr>
+          <td><img src="https://www.google.com/s2/favicons?domain=memfault.com&sz=32" alt="" style="height:16px;width:16px;vertical-align:middle;margin-right:8px;"><a href="https://www.memfault.com" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;text-decoration-style:dotted;text-decoration-color:#aaaaaa;text-underline-offset:3px;">Memfault</a> <span class="ipo">(2020)</span></td>
+          <td>Observability and OTA for connected devices</td>
+          <td><div class="role-badges"><span class="role-badge">I</span><span class="role-badge">A</span></div></td>
+          <td><span class="status-exit">EXIT → Nordic Semiconductor (2025)</span></td>
+        </tr>
+        <tr>
+          <td><img src="data:image/jpeg;base64,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" alt="EraDB" style="height:16px;width:16px;vertical-align:middle;margin-right:8px;border-radius:3px;"><a href="https://newsroom.servicenow.com/press-releases/details/2022/ServiceNow-to-Acquire-Observability-Innovator-Era-Software-Helping-Businesses-Turn-Data-Driven-Insights-into-Action-10-05-2022-12-00-AM/default.aspx" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;text-decoration-style:dotted;text-decoration-color:#aaaaaa;text-underline-offset:3px;">EraDB</a> <span class="ipo">(2020)</span></td>
+          <td>Fast, novel time series DB</td>
+          <td><div class="role-badges"><span class="role-badge">A</span></div></td>
+          <td><span class="status-exit">EXIT → ServiceNow (2022)</span></td>
+        </tr>
+        <tr>
+          <td><img src="data:image/webp;base64,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" alt="Tempow" style="height:16px;width:16px;vertical-align:middle;margin-right:8px;border-radius:3px;"><a href="https://www.agoranov.com/news-articles/acquisition-google-acquires-tempow" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;text-decoration-style:dotted;text-decoration-color:#aaaaaa;text-underline-offset:3px;">Tempow</a> <span class="ipo">(2020)</span></td>
+          <td>OS for TrueWireless earbuds</td>
+          <td><div class="role-badges"><span class="role-badge">A</span></div></td>
+          <td><span class="status-exit">EXIT → Google (2021)</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size:11px;color:var(--faint);margin-top:10px;letter-spacing:0.03em;text-align:right;font-weight:700;">Legend: I=Invest&nbsp;&nbsp;A=Advise&nbsp;&nbsp;B=Board</p>
+  </div>
+  </div>
+</div>
+
+<hr class="dash-rule" />
+
+<!-- SERVICES -->
+<div class="page">
+  <div class="section reveal" id="services">
+    <p class="section-title">Services</p>
+    <div class="services-wrap">
+      <div class="service-item">
+        <div class="service-num">01 —</div>
+        <div>
+          <p class="service-name">Advisory</p>
+          <p class="service-desc">Ongoing guidance for founders on fundraising, product strategy, technical architecture, the first 10 hires, and communicating with boards and investors.</p>
         </div>
+      </div>
+      <div class="service-item">
+        <div class="service-num">02 —</div>
+        <div>
+          <p class="service-name">Consulting</p>
+          <p class="service-desc">Project-based engagements — fundraising, go-to-market planning, competitive positioning. The same as Advisory, but more intensive with cash comp.
 
-        <div class="company-row">
-            <div class="company-block col-6">
-                <a href="https://tempow.com/" target="_blank"><img class="company-logo" src="images/tempow.png" alt=""></a>
-                <div class="company-block-description">
-                    <p class="company-block-title">Tempow</p>
-                    <p class="company-block-subtitle">Enabling the next generation of Bluetooth Audio. (2020)</p>    
-                </div>
-            </div>
-            <div class="company-block col-6">
-                <a><img class="company-logo" src="images/new_atlas.png" alt=""></a>
-                <div class="company-block-description">
-                    <p class="company-block-title">New Atlas Bio</p>
-                    <p class="company-block-subtitle">Synthetic biology platform. (2020)</p>    
-                </div>
-            </div>
         </div>
-
-        <div class="company-row">
-            <div class="company-block col-6">
-                <a href="https://golioth.io/" target="_blank"><img class="company-logo" src="images/golioth.png" alt=""></a>
-                <div class="company-block-description">
-                    <p class="company-block-title">Golioth</p>
-                    <p class="company-block-subtitle">Making IoT boring. (2021)</p>    
-                </div>
-            </div>
-            <div class="company-block col-6">
-                <a href="https://wyde.io/" target="_blank"><img class="company-logo" src="images/wyde.png" alt=""></a>
-                <div class="company-block-description">
-                    <p class="company-block-title">Wyde</p>
-                    <p class="company-block-subtitle">Leveraging open source and the imminent ubiquity of UWB to bring people and things into focus. (2021)</p>    
-                </div>
-            </div>
+      </div>
+      <div class="service-item">
+        <div class="service-num">03 —</div>
+        <div>
+          <p class="service-name">Investing</p>
+          <p class="service-desc">Pre-seed and seed investments at the intersection of hardware and software. Strong preference for open-source angles and teams that ship.</p>
         </div>
-
-        <div class="company-row">
-            <!-- <div class="company-block col-6">
-                <a href="http://www.tryhale.com/" target="_blank"><img class="company-logo" src="images/hava.png" alt=""></a>
-                <div class="company-block-description">
-                    <p class="company-block-title">Hava Health</p>
-                    <p class="company-block-subtitle">Connected nicotine cessation device. (2020)</p>    
-                </div>
-            </div> -->
-            <div class="company-block col-6">
-                <a href="https://www.runtime.io/" target="_blank"><img class="company-logo" src="images/runtime.png" alt=""></a>
-                <div class="company-block-description">
-                    <p class="company-block-title">Runtime</p>
-                    <p class="company-block-subtitle">Device-to-cloud IoT platform built on open source <a href="https://mynewt.apache.org/" target="_blank">Apache Mynewt</a> and <a href="https://www.zephyrproject.org/" target="_blank">Zypher OS</a>. <strong><em>Exit to JUUL Labs in 2018.</strong></em> (2014)</p>
-                </div>
-            </div>
-        </div>
-
+      </div>
     </div>
-    <hr width="75%" text-align="center;" size="3;" color="#000000;" >
-</body>
+  </div>
+</div>
+
+<hr class="dash-rule" />
+
+<!-- CONTACT -->
+<div class="page">
+  <div class="section reveal" id="contact">
+    <p class="section-title">Contact</p>
+    <p class="contact-body">
+      Building something in AI, IoT, embedded systems, developer tools, or early-stage hardware?
+      <strong>Conversations are direct and commitments mean something.</strong>
+    </p>
+    <div class="contact-form">
+      <div class="form-row">
+        <div class="field">
+          <label>Name</label>
+          <input type="text" placeholder="your name" />
+        </div>
+        <div class="field">
+          <label>Email</label>
+          <input type="email" placeholder="you@company.com" />
+        </div>
+      </div>
+      <div class="field">
+        <label>What are you building?</label>
+        <textarea placeholder="tell me about your company or project..."></textarea>
+      </div>
+      <button class="submit-btn">SEND →</button>
+    </div>
+  </div>
+</div>
+
+<hr class="dash-rule" />
+
+<!-- FOOTER -->
 <footer>
-    <p>Property of Interleave, LLC.</p>
+  <span class="footer-copy">© 2025 Interleave, LLC · San Francisco</span>
+  <div class="footer-links">
+    <a href="https://www.linkedin.com/in/james-pace-772142/" target="_blank" rel="noopener">LinkedIn</a>
+    <a href="#contact">Contact</a>
+  </div>
 </footer>
+
+<script>
+  // Scroll reveal
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+  }, { threshold: 0.05 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
 </html>
